@@ -9,6 +9,7 @@ public class playerController : MonoBehaviour
     Rigidbody2D rb2d;
     bool isAttacking = false; //you're initialized in idle state, so you shouldn't be attacking
     bool isHurt = false; //call this when making contacting with hitbox
+    bool canPressKeys = true; //To create committal actions to player
 
     [SerializeField]
     float speed = 1.0f;
@@ -25,20 +26,24 @@ public class playerController : MonoBehaviour
     {
         animator.SetFloat("speed", Mathf.Abs(rb2d.velocity.x));
         animator.SetBool("isAttacking", isAttacking);
+        //canPressKeys = true;
         if (Input.GetKey("a"))
         {
-            rb2d.velocity = new Vector2(-speed, 0f);
+            if (canPressKeys == true)
+                rb2d.velocity = new Vector2(-speed, 0f);
         }
 
         if (Input.GetKey("s"))
         {
-            rb2d.velocity = new Vector2(speed, 0f);
+            if (canPressKeys == true) 
+                rb2d.velocity = new Vector2(speed, 0f);
         }
 
         if (Input.GetKey("d"))
         {
-            isAttacking = true;
-            rb2d.velocity = new Vector2(0f, 0f);
+                isAttacking = true;
+                rb2d.velocity = new Vector2(0f, 0f);
+                canPressKeys = false;
         } else if (Input.GetKeyUp("d"))
             {
                 isAttacking = false;
