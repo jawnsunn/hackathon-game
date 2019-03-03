@@ -6,7 +6,7 @@ public class playerController : MonoBehaviour
 {
     Rigidbody2D rb2d;
     [SerializeField]
-    float speed = 8.0f;
+    float speed = 1.0f;
     //Vector2 velocity;
 
     // Start is called before the first frame update

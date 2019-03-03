@@ -420,7 +420,7 @@ MonoBehaviour:
   m_AirControl: 1
   m_WhatIsGround:
     serializedVersion: 2
-    m_Bits: 1591
+    m_Bits: 1590
   m_GroundCheck: {fileID: 598921544}
   m_CeilingCheck: {fileID: 1643931579}
   m_CrouchDisableCollider: {fileID: 0}
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03037887242f08647b458260b6804f5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.5
+  speed: 1
 --- !u!1 &1643931578
 GameObject:
   m_ObjectHideFlags: 0
