@@ -38,12 +38,10 @@ public class playerController : MonoBehaviour
         if (Input.GetKey("d"))
         {
             isAttacking = true;
-        }
-
-        if (Input.GetKeyUp("d"))
-        {
-            isAttacking = false;
-        }
+        } else if (Input.GetKeyUp("d"))
+            {
+                isAttacking = false;
+            }
 
         /*psuedocode:
          * if (collide with otherPlayer.hitbox)
