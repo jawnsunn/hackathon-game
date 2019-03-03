@@ -38,6 +38,7 @@ public class playerController : MonoBehaviour
         if (Input.GetKey("d"))
         {
             isAttacking = true;
+            rb2d.velocity = new Vector2(0f, 0f);
         } else if (Input.GetKeyUp("d"))
             {
                 isAttacking = false;
