@@ -7,8 +7,9 @@ public class playerController : MonoBehaviour
     //Initialize and create classes here!
     public Animator animator;
     Rigidbody2D rb2d;
-    bool isAttacking = false; //you're initialized in idle state, so you shouldn't be attacking
-    bool isHurt = false; //call this when making contacting with hitbox
+    player2Controller player2state;
+    public bool isAttacking = false; //you're initialized in idle state, so you shouldn't be attacking
+    public bool isHurt = false; //call this when making contacting with hitbox
     bool canPressKeys = true; //To create committal actions to player
     public float cooldown;
     gameManager gm;
@@ -22,6 +23,7 @@ public class playerController : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         gm = GameObject.Find("gameManager").GetComponent<gameManager>();
+        player2state = GameObject.Find("Player2").GetComponent<player2Controller>();
         cooldown = 1f;
     }
 
@@ -70,9 +72,8 @@ public class playerController : MonoBehaviour
          *      end the match and use gameController to call gameOver state
          * } */
 
-        if (Input.GetKey("x"))
+        if (isHurt == true)
         {
-            isHurt = true;
             Hurt();
         }
     }
@@ -87,9 +88,19 @@ public class playerController : MonoBehaviour
         }
     }
 
-    void Hurt()
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        gm.p2Wins++;
-        gm.MatchEnd();
+        if (other.gameObject.name == "Player2")
+        {
+            player2state.isHurt = true;
+            player2state.Hurt();
+        }
+    }
+
+    public void Hurt()
+    {
+            gm.p2Wins++;
+            gm.MatchEnd();
+        
     }
 }

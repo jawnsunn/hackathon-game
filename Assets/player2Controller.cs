@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class player2Controller : MonoBehaviour
 {
-    //same as playerController only now for player 2!
-
     //Initialize and create classes here!
     public Animator animator;
     Rigidbody2D rb2d;
-    bool isAttacking = false; //you're initialized in idle state, so you shouldn't be attacking
-    bool isHurt = false; //call this when making contacting with hitbox
+    playerController player1state;
+    public bool isAttacking = false; //you're initialized in idle state, so you shouldn't be attacking
+    public bool isHurt = false; //call this when making contacting with hitbox
     bool canPressKeys = true; //To create committal actions to player
-    private float cooldown;
+    public float cooldown;
+    gameManager gm;
 
     [SerializeField]
     float speed = 1.0f;
@@ -22,7 +22,8 @@ public class player2Controller : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-        float cooldown = 170f;
+        gm = GameObject.Find("gameManager").GetComponent<gameManager>();
+        cooldown = 1f;
     }
 
     // Update is called once per frame
@@ -30,7 +31,10 @@ public class player2Controller : MonoBehaviour
     {
         animator.SetFloat("speed", Mathf.Abs(rb2d.velocity.x));
         animator.SetBool("isAttacking", isAttacking);
+        animator.SetBool("isHurt", isHurt);
+
         canPressKeys = true;
+        isAttacking = false;
         if (Input.GetKey("j"))
         {
             if (canPressKeys == true)
@@ -43,35 +47,60 @@ public class player2Controller : MonoBehaviour
                 rb2d.velocity = new Vector2(speed, 0f);
         }
 
-        if (cooldown == 10f && isAttacking == false)
+        if (isAttacking == false)
         {
-            if (Input.GetKey("l"))
+            if (Input.GetKeyUp("l"))
             {
-                isAttacking = true;
                 rb2d.velocity = new Vector2(0f, 0f);
+                isAttacking = true;
+                //cooldown -= Time.deltaTime;
                 canPressKeys = false;
-                //cooldown -= Time.deltaTime * 100;
+                //Recovery();
             }
         }
-        if (Input.GetKeyUp("d"))
-        {
-            isAttacking = false;
-        }
-
+        /* if (Input.GetKeyUp("d"))
+            {
+                isAttacking = false;
+                canPressKeys = true;
+            }
+       */
         /*psuedocode:
          * if (collide with otherPlayer.hitbox)
          * {
          *      isHurt = true;
          *      end the match and use gameController to call gameOver state
          * } */
+
+        if (isHurt == true)
+        {
+            Hurt();
+        }
     }
 
     void Recovery()
     {
-        cooldown -= Time.deltaTime;
+        if (cooldown < 1)
+        {
+            cooldown = 1f;
+            isAttacking = false;
+            canPressKeys = true;
+        }
+    }
 
-        if (cooldown == 0)
-            cooldown = 0.0f;
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.name == "02593") 
+        {
+            player1state.isHurt = true;
+            player1state.Hurt();
+        }
+    }
+
+    public void Hurt()
+    {
+            Mathf.Floor((gm.p1Wins++)/2);
+            gm.MatchEnd();
+        
     }
 }
 

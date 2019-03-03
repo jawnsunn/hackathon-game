@@ -8,7 +8,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/test.unity
     guid: a2d7a1d2b0328ac41880bf4fd0aa1826
+  - enabled: 1
+    path: Assets/Fatal-Foot.unity
+    guid: d81954568ab7a5048b3ca576616a8e63
   m_configObjects: {}
